@@ -3,14 +3,20 @@ import http from 'http';
 import cors from 'cors';
 import { Server } from 'socket.io'
 import authRoutes from './routes/auth.route.js';
+import dotenv from 'dotenv';
+import { connectDB } from './lib/db.js';
 
 const app = express();
+dotenv.config();
 
 const port = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(express.json());
 
 const server = http.createServer(app);
+
+connectDB()
 
 const io = new Server(server, {
     cors: {
